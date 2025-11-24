@@ -1,0 +1,193 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for Centering */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header Styling */
+.header {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropbox-icon {
+    width: 24px;
+    height: 24px;
+    background-color: #0061ff;
+    border-radius: 4px;
+}
+
+.app-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.globe-icon {
+    color: #666;
+    width: 24px;
+    height: 24px;
+}
+
+/* Form Card Container */
+.form-card {
+    width: 90%;
+    max-width: 400px;
+    margin-top: 80px;
+    padding: 24px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Main Title */
+.form-card h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 32px;
+}
+
+/* Social Buttons */
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 0;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.google-button {
+    border: 1px solid #e0e0e0;
+    background-color: #f7f9fb;
+    color: #444;
+}
+
+.google-button:hover {
+    background-color: #f0f3f6;
+}
+
+.apple-button {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+}
+
+.apple-button:hover {
+    background-color: #f7f7f7;
+}
+
+.social-button svg {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+}
+
+/* OR Separator */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+.separator span {
+    padding: 0 16px;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Email Input */
+.input-group {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #535353;
+    margin-bottom: 4px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.email-input:focus {
+    border-color: #0061ff;
+    box-shadow: 0 0 0 2px rgba(0, 97, 255, 0.2);
+}
+
+/* Continue Button */
+.continue-button {
+    width: 100%;
+    background-color: #0061ff;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.continue-button:hover {
+    background-color: #0050e6;
+}
+
+@media (min-width: 600px) {
+    .page-container {
+        justify-content: center; /* Center vertically on large screens */
+    }
+    .header {
+        position: absolute;
+        top: 0;
+    }
+    .form-card {
+        margin-top: 0;
+    }
+}

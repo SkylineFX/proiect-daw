@@ -1,3 +1,10 @@
+<?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 
@@ -5,15 +12,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prezentare proiect</title>
-    <link rel="stylesheet" href="./css/prezentare.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 
 <body>
 
     <header>
         <a href="#">Prezentare Proiect DAW</a>
+
+        <div class="header-buttons">
+            <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="app/controller/logout.php" style="margin-left: 1rem; font-size: 1rem;">Deconectare</a>
+            <?php else: ?>
+            <a href="app/controller/login.php" style="margin-left: 1rem; font-size: 1rem;">Autentificare</a>
+            <?php endif; ?>
+        </div>
     </header>
 
     <section>
@@ -136,7 +149,7 @@
 
         <p style="margin-top: 1rem">Tabele care reprezintă aceste entități sunt reprezentate in diagrama conceptuală a
             bazei de date din phpMyAdmin:</p>
-        <img src="./img/diagrama.png" alt="Diagrama bazei de date" class="diagram">
+        <img src="./assets/diagrama.png" alt="Diagrama bazei de date" class="diagram">
     </section>
 
     <section>
@@ -149,13 +162,13 @@
         <p>Următoarea diagramă de activitate ilustrează procesul de cumpărare al unui client si ilustrează parcursul
             complet al acestuia, de la accesarea site-ului, autentificare și navigarea prin produse, până la adăugarea
             articolelor în coș și finalizarea comenzii.</p>
-        <img src="./img/client.png" alt="Diagrama activitate client" class="diagram">
+        <img src="./assets/client.png" alt="Diagrama activitate client" class="diagram">
 
         <h3>Fluxul administratorului</h3>
         <p>Diagrama de mai jos prezintă pașii efectuați de un administrator si prezintă activitățile interne de
             gestionare ale magazinului: autentificarea în panoul de control, adăugarea și modificarea produselor,
             organizarea categoriilor și actualizarea comenzilor.</p>
-        <img src="./img/admin.png" alt="Diagrama activitate admin" class="diagram">
+        <img src="./assets/admin.png" alt="Diagrama activitate admin" class="diagram">
 
     </section>
 

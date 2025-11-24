@@ -14,10 +14,18 @@ body {
 }
 
 header {
+    width: 100%;
     padding: 1rem;
     background-color: #2e3440;
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header a {
