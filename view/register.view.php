@@ -16,7 +16,7 @@
             <?php endif; ?>
 
             <form method="POST">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
+                <?php csrf_field(); ?>
                 <div class="input-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required maxlength="20" pattern="[A-Za-z0-9_]{2,20}">

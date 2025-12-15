@@ -1,16 +1,20 @@
 <?php
-
-require '../model/Database.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 // Unset all session variables
-$_SESSION = array();
+$_SESSION = [];
 
 // Destroy the session cookie
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params["path"], $params["domain"],
-        $params["secure"], $params["httponly"]
+    setcookie(
+        session_name(),
+        "",
+        time() - 42000,
+        $params["path"],
+        $params["domain"],
+        $params["secure"],
+        $params["httponly"],
     );
 }
 
@@ -18,6 +22,4 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Redirect to the login page
-header('Location: login.php');
-exit();
-?>
+redirect('app/controller/login.php');

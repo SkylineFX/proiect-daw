@@ -1,29 +1,22 @@
 <?php
+require_once __DIR__ . '/../bootstrap.php';
 
-require '../model/Database.php';
-
-if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
-    exit();
-}
-
-try {
-    $pdo = Database::getInstance()->getConnection();
-} catch (PDOException $e) {
-    error_log('Database connection failed: ' . $e->getMessage());
-    $error = 'Internal error. Please try again later.';
-    exit();
+if (is_logged_in()) {
+    redirect('app/controller/dashboard.php');
 }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
+    verify_csrf(); // Check CSRF token
+    
+    $username = sanitize($_POST['username']);
     $password = $_POST['password'];
 
     if (empty($username) || empty($password)) {
         $error = 'Both username and password are required.';
     } else {
         try {
+            $pdo = Database::getInstance()->getConnection();
             $stmt = $pdo->prepare('SELECT id, password_hash, username, role FROM users WHERE username = ?');
             $stmt->execute([$username]);
             $user = $stmt->fetch();
@@ -33,17 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
 
-                header('Location: dashboard.php');
-                exit();
+                redirect('app/controller/dashboard.php');
             } else {
                 $error = 'Invalid username or password.';
             }
         } catch (PDOException $e) {
-            error_log('Database connection failed: ' . $e->getMessage());
+            error_log('Login DB Error: ' . $e->getMessage());
             $error = 'Internal error. Please try again later.';
         }
     }
 }
 
-require_once '../../view/login.view.php'
-?>
+require_once APP_ROOT . '/view/login.view.php';

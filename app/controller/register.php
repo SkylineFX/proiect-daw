@@ -1,43 +1,27 @@
 <?php
+require_once __DIR__ . '/../bootstrap.php';
 
-require_once '../model/Database.php';
-require_once '../model/Validator.php';
-
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-try {
-    $pdo = Database::getInstance()->getConnection();
-} catch (PDOException $e) {
-    error_log('Database connection failed: ' . $e->getMessage());
-    $error = 'Internal error. Please try again later.';
-    exit();
+if (is_logged_in()) {
+    redirect('app/controller/dashboard.php');
 }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_SESSION['user_id'])) {
-        header('Location: dashboard.php');
-        exit();
-    }
+    verify_csrf(); // Check CSRF token
 
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $error = 'Invalid form submission.';
-        exit();
-    }
-
-    $username = trim($_POST['username']);
-    $email = trim($_POST['email']);
+    $username = sanitize($_POST['username']);
+    $email = sanitize($_POST['email']);
     $password = $_POST['password'];
 
+    // Validator already included via bootstrap
     $validationErrors = Validator::validateRegistration($username, $email, $password);
     if ($validationErrors) {
-        $error = $validationErrors[0]; //$error = implode('<br>', $validationErrors);
+        $error = $validationErrors[0]; 
     } else {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
         try {
+            $pdo = Database::getInstance()->getConnection();
             $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ? OR email = ?');
             $stmt->execute([$username, $email]);
             
@@ -48,10 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$username, $password_hash, $email]);
                 
                 $_SESSION['flash_success'] = 'Registration successful! You can now log in.';
-                unset($_SESSION['csrf_token']); 
+                // unset($_SESSION['csrf_token']); // Optional: Keep token valid for multiple requests or regenerate
 
-                header('Location: login.php'); 
-                exit();
+                redirect('app/controller/login.php');
             }
         } catch (PDOException $e) {
             error_log('Database error (register): ' . $e->getMessage());
@@ -60,5 +43,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once '../../view/register.view.php'
-?>
+require_once APP_ROOT . '/view/register.view.php';

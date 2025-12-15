@@ -4,10 +4,10 @@ class Database {
     private PDO $connection;
 
     // Database configuration
-    private string $host = "localhost";
-    private string $dbName = "rtudorss_project";
-    private string $username = "rtudorss_project";
-    private string $password = "F5y7ahRNt6FewA9rrDnT";
+    private string $host = "127.0.0.1";
+    private string $dbName = "crudapp";
+    private string $username = "root";
+    private string $password = "";
 
     private array $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

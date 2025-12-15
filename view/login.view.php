@@ -13,6 +13,7 @@
             <?php endif; ?>
 
             <form method="POST">
+                <?php csrf_field(); ?>
                 <div class="input-group">
                     <label for="username">Username:</label>
                     <input type="text" id="username" name="username" required>
