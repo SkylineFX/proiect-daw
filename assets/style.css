@@ -1,4 +1,4 @@
-/* Modern Minimalist Design System */
+/* Custom Styles Restored */
 
 :root {
     /* Color Palette (Nord-inspired + Clean Modern) */
@@ -20,12 +20,6 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --container-width: 1200px;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {

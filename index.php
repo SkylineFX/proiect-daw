@@ -12,6 +12,8 @@ $products = $productModel->getAllProducts();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magazin Online - Papetarie</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="assets/cart.js"></script>
     <link rel="stylesheet" href="assets/style.css">
 
 </head>
@@ -22,6 +24,7 @@ $products = $productModel->getAllProducts();
         
         <div class="header-buttons">
             <a href="presentation.php" style="margin-right: 1rem;">Despre Proiect</a>
+            <a href="app/controller/cart.php" style="margin-right: 1rem; font-weight:bold;">Cos <span id="cart-count"></span></a>
             <?php if (is_logged_in()): ?>
                 <a href="app/controller/dashboard.php">Contul Meu</a>
                 <?php if (is_admin()): ?>
@@ -36,7 +39,7 @@ $products = $productModel->getAllProducts();
     </header>
 
     <div style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-        <h1 style="text-align: center; margin-bottom: 2rem;">Produse Recente</h1>
+        <h1 style="text-align: center; margin-bottom: 2rem;" class="text-red-500">Produse Recente</h1>
         
         <?php if (empty($products)): ?>
             <p style="text-align: center;">Nu exista produse momentan.</p>
@@ -54,7 +57,7 @@ $products = $productModel->getAllProducts();
                         <div class="product-cat"><?= htmlspecialchars($p['subcategory_name'] ?? 'General') ?></div>
                         <h3 class="product-title"><?= htmlspecialchars($p['name']) ?></h3>
                         <div class="product-price"><?= number_format($p['price'], 2) ?> RON</div>
-                        <a href="#" class="btn-add">Adauga in Cos</a>
+                        <a href="#" class="btn-add" data-id="<?= $p['id'] ?>">Adauga in Cos</a>
                     </div>
                 </div>
                 <?php endforeach; ?>

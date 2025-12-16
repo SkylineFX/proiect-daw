@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="assets/cart.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body>
@@ -14,6 +17,7 @@
         <a href="index.php">Prezentare Proiect DAW</a>
 
         <div class="header-buttons">
+            <a href="app/controller/cart.php" style="margin-right: 1rem; font-weight:bold;">Cos <span id="cart-count"></span></a>
             <?php if (is_logged_in()): ?>
             <a href="app/controller/logout.php" style="margin-left: 1rem; font-size: 1rem;">Deconectare</a>
             <?php else: ?>

@@ -26,6 +26,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
 
+                // --- Cart Sync Logic ---
+                if (!isset($_SESSION['cart'])) {
+                    $_SESSION['cart'] = [];
+                }
+
+                // 1. Fetch DB Cart
+                $stmtCart = $pdo->prepare("SELECT product_id, quantity FROM cart_items WHERE user_id = ?");
+                $stmtCart->execute([$user['id']]);
+                $dbCartItems = $stmtCart->fetchAll(PDO::FETCH_KEY_PAIR); // [product_id => quantity]
+
+                // 2. Merge DB Cart into Session Cart
+                foreach ($dbCartItems as $pid => $qty) {
+                    if (isset($_SESSION['cart'][$pid])) {
+                        $_SESSION['cart'][$pid] += $qty;
+                    } else {
+                        $_SESSION['cart'][$pid] = $qty;
+                    }
+                }
+
+                // 3. Save Merged Cart back to DB
+                // Clear old DB cart for this user to avoid complexity, then re-insert all
+                $pdo->prepare("DELETE FROM cart_items WHERE user_id = ?")->execute([$user['id']]);
+                
+                if (!empty($_SESSION['cart'])) {
+                    $insertSql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES ";
+                    $insertParams = [];
+                    $placeholders = [];
+                    foreach ($_SESSION['cart'] as $pid => $qty) {
+                        $placeholders[] = "(?, ?, ?)";
+                        $insertParams[] = $user['id'];
+                        $insertParams[] = $pid;
+                        $insertParams[] = $qty;
+                    }
+                    if (!empty($placeholders)) {
+                        $pdo->prepare($insertSql . implode(', ', $placeholders))->execute($insertParams);
+                    }
+                }
+                // --- End Cart Sync ---
+
                 redirect('app/controller/dashboard.php');
             } else {
                 $error = 'Invalid username or password.';
