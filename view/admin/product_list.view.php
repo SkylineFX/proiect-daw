@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Products</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="../../../assets/style.css">
-
-</head>
-<body>
-    <header>
-        <a href="../../../index.php">Home</a>
-        <div class="header-buttons">
-            <a href="../../logout.php">Logout</a>
-        </div>
-    </header>
+<?php
+$pageTitle = 'Admin - Products';
+require_once APP_ROOT . '/view/partials/header.php';
+?>
 
     <div class="admin-container">
         <h1>Product Management</h1>

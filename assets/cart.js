@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function addToCart(productId, quantity = 1) {
     try {
-        const response = await fetch('app/controller/cart_api.php', {
+        const response = await fetch(CART_API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

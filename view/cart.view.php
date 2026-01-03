@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="ro">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cos Cumparaturi</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="../../assets/style.css">
-    <script src="../../assets/cart.js"></script> <!-- Re-use for update/remove logic if added later -->
-</head>
-<body>
-
-    <header>
-        <a href="../../index.php">Magazin Papetarie</a>
-        
-        <div class="header-buttons">
-            <a href="../../index.php">Acasa</a>
-            <?php if (is_logged_in()): ?>
-                <a href="logout.php" style="margin-left: 1rem;">Deconectare</a>
-            <?php else: ?>
-                <a href="login.php">Autentificare</a>
-            <?php endif; ?>
-        </div>
-    </header>
+<?php
+$pageTitle = 'Cos Cumparaturi';
+require_once APP_ROOT . '/view/partials/header.php';
+?>
 
     <div class="common-container" style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem;">
         <h1>Cosul de Cumparaturi</h1>

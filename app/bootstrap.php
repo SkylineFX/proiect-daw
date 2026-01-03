@@ -8,7 +8,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Define Constants
 define('APP_ROOT', dirname(__DIR__));
-define('URL_ROOT', ''); // Leave empty if at root, or '/proiect' if in subdirectory
+
+// Dynamic URL Root (detects http/https and host:port automatically)
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+define('URL_ROOT', $protocol . '://' . $host);
 
 // Error Reporting (Development)
 ini_set('display_errors', 1);

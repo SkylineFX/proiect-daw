@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $product ? 'Edit' : 'Add' ?> Product</title>
-    <link rel="stylesheet" href="../../../assets/style.css">
-
-</head>
-<body>
-    <header>
-        <a href="products.php">Back to Products</a>
-    </header>
+<?php
+$pageTitle = ($product ? 'Edit' : 'Add') . ' Product';
+require_once APP_ROOT . '/view/partials/header.php';
+?>
 
     <div class="admin-container">
         <h1><?= $product ? 'Edit Product: ' . htmlspecialchars($product['name']) : 'Add New Product' ?></h1>
