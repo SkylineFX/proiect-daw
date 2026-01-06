@@ -1,1 +1,11 @@
 .DS_Store
+vendor/
+.env
+sql/
+bootstrap.php
+composer.json
+composer.lock
+.htaccess
+update_schema.php
+vendor.zip
+export.sql
