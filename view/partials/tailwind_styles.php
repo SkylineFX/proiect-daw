@@ -33,10 +33,6 @@ section {
     @apply max-w-[1200px] mx-auto p-8 my-8 bg-bg-card rounded-md shadow-sm;
 }
 
-.admin-container {
-    @apply max-w-[1200px] mx-auto px-6 my-12;
-}
-
 /* Typography */
 h1, h2, h3 {
     @apply text-text-primary font-bold mb-4 tracking-tighter;
@@ -98,7 +94,7 @@ label {
 
 /* Tables */
 .table {
-    @apply w-full border-separate border-spacing-0 bg-bg-card rounded-md overflow-hidden shadow-sm mt-6;
+    @apply w-full border-separate border-spacing-0 bg-bg-card rounded-md overflow-hidden shadow-sm mt-6 border-2 border-black;
 }
 
 .table th {

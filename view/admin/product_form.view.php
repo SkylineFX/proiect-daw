@@ -3,7 +3,7 @@ $pageTitle = ($product ? 'Edit' : 'Add') . ' Product';
 require_once APP_ROOT . '/view/partials/header.php';
 ?>
 
-    <div class="admin-container">
+    <div class="max-w-[1200px] mx-auto px-6 my-12">
         <h1><?= $product ? 'Edit Product: ' . htmlspecialchars($product['name']) : 'Add New Product' ?></h1>
 
         <?php if (isset($error)): ?>
@@ -57,7 +57,11 @@ require_once APP_ROOT . '/view/partials/header.php';
                 <input type="file" name="image" class="form-control" accept="image/*">
             </div>
 
-            <button type="submit" class="btn btn-primary"><?= $product ? 'Update Product' : 'Create Product' ?></button>
+            <button 
+                class="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200" 
+                type="submit">
+                <?= $product ? 'Update Product' : 'Create Product' ?>
+            </button>
         </form>
     </div>
 </body>

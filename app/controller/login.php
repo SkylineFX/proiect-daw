@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 // --- End Cart Sync ---
 
-                redirect('/index.php');
+                redirect('index.php');
             } else {
                 $error = 'Invalid username or password.';
             }

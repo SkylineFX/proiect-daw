@@ -68,47 +68,6 @@ body {
     margin-bottom: 32px;
 }
 
-/* Social Buttons */
-.social-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 12px 0;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.google-button {
-    border: 1px solid #e0e0e0;
-    background-color: #f7f9fb;
-    color: #444;
-}
-
-.google-button:hover {
-    background-color: #f0f3f6;
-}
-
-.apple-button {
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-}
-
-.apple-button:hover {
-    background-color: #f7f7f7;
-}
-
-.social-button svg {
-    margin-right: 8px;
-    width: 20px;
-    height: 20px;
-}
-
 /* OR Separator */
 .separator {
     display: flex;
@@ -164,29 +123,37 @@ body {
 /* Continue Button */
 .continue-button {
     width: 100%;
-    background-color: #0061ff;
-    color: white;
+    height: 48px;
+    border: 2px solid black;
+    padding: 2.5px;
+    background-color: #A6FAFF;
+
+    color: black;
     font-size: 16px;
     font-weight: 600;
     padding: 12px 0;
-    border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
+    transition: box-shadow 0.2s;
 }
 
 .continue-button:hover {
-    background-color: #0050e6;
+    background-color: #79F7FF;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
 }
 
 @media (min-width: 600px) {
     .page-container {
-        justify-content: center; /* Center vertically on large screens */
+        justify-content: center;
+        /* Center vertically on large screens */
     }
+
     .header {
         position: absolute;
         top: 0;
     }
+
     .form-card {
         margin-top: 0;
     }

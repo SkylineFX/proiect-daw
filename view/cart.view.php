@@ -40,7 +40,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                             </td>
                             <td><?= number_format($item['line_total'], 2) ?> RON</td>
                             <td>
-                                <button onclick="removeFromCart(<?= $item['id'] ?>)" class="btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Sterge</button>
+                                <button onclick="removeFromCart(<?= $item['id'] ?>)" class="bg-[#FF0C81] text-white text-xs font-bold border-black border-2 p-2 rounded-sm w-full">Sterge</button>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -54,8 +54,12 @@ require_once APP_ROOT . '/view/partials/header.php';
             </div>
 
             <div style="margin-top: 2rem; text-align: right;">
-                <a href="../../index.php" class="btn" style="background: #cbd5e1; margin-right: 1rem;">Continua Cumparaturile</a>
-                <a href="#" onclick="alert('Checkout not implemented yet!')" class="btn-primary">Finalizeaza Comanda</a>
+                <a href="../../index.php" class="h-12 border-black border-2 p-2.5 bg-gray-200 hover:bg-gray-300 hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200" style="margin-right: 1rem;">Continua Cumparaturile</a>
+                <?php if (is_logged_in()): ?>
+                    <a href="checkout.php" class="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200">Finalizeaza Comanda</a>
+                <?php else: ?>
+                    <a href="login.php" class="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200">Finalizeaza Comanda</a>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>

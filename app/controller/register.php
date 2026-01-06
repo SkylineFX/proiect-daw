@@ -34,11 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $stmt = $pdo->prepare('INSERT INTO users (username, password_hash, email) VALUES (?, ?, ?)');
                 $stmt->execute([$username, $password_hash, $email]);
+                $newUserId = $pdo->lastInsertId();
                 
-                $_SESSION['flash_success'] = 'Registration successful! You can now log in.';
-                // unset($_SESSION['csrf_token']); // Optional: Keep token valid for multiple requests or regenerate
+                // Auto-login
+                $_SESSION['user_id'] = $newUserId;
+                $_SESSION['username'] = $username;
+                $_SESSION['role'] = 'client'; // Default role
 
-                redirect('/index.php');
+                // Sync Cart: Save session cart to DB for the new user
+                if (!empty($_SESSION['cart'])) {
+                     $insertSql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES ";
+                     $insertParams = [];
+                     $placeholders = [];
+                     foreach ($_SESSION['cart'] as $pid => $qty) {
+                         $placeholders[] = "(?, ?, ?)";
+                         $insertParams[] = $newUserId;
+                         $insertParams[] = $pid;
+                         $insertParams[] = $qty;
+                     }
+                     if (!empty($placeholders)) {
+                         $pdo->prepare($insertSql . implode(', ', $placeholders))->execute($insertParams);
+                     }
+                }
+                
+                $_SESSION['flash_success'] = 'Registration successful! You are now logged in.';
+
+                redirect('index.php');
             }
         } catch (PDOException $e) {
             error_log('Database error (register): ' . $e->getMessage());

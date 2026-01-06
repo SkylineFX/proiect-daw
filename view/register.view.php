@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Register</title>
+    <title>Înregistrare</title>
     <link rel="stylesheet" href="../../assets/login.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="page-container">
         <main class="form-card">
-            <h2>Register</h2>
+            <h2>Înregistrare</h2>
             <?php if ($error): ?>
                 <p style="color: red;"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
             <?php elseif (!empty($_SESSION['flash_success'])): ?>
@@ -19,7 +19,7 @@
             <form method="POST">
                 <?php csrf_field(); ?>
                 <div class="input-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Nume:</label>
                     <input type="text" id="username" name="username" required maxlength="20" pattern="[A-Za-z0-9_]{2,20}">
                 </div>
                 <div class="input-group">
@@ -27,14 +27,14 @@
                     <input type="email" id="email" name="email" required maxlength="256">
                 </div>
                 <div class="input-group">
-                    <label for="password">Password:</label>
+                    <label for="password">Parola:</label>
                     <input type="password" id="password" name="password" required minlength="8" maxlength="128">
                 </div>
                 <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>"></div>
                 <br>
-                <button type="submit" class="continue-button">Register</button>
+                <button type="submit" class="continue-button">Înregistrează-te</button>
             </form>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Ai deja cont? <a href="login.php">Autentifică-te aici</a>.</p>
         </main> 
     </div>
 </body>
