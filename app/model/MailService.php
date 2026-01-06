@@ -3,24 +3,30 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 class MailService {
-    private const SMTP_HOST = 'rtudor.daw.ssmr.ro';
-    private const SMTP_USER = 'account@rtudor.daw.ssmr.ro';
-    private const SMTP_PASS = 'account';
-    private const SMTP_PORT = 465; // SMTPS usually
-    private const SMTP_SECURE = PHPMailer::ENCRYPTION_SMTPS;
+    public static function getSmtpConfig() {
+        return [
+            'host' => $_ENV['SMTP_HOST'],
+            'user' => $_ENV['SMTP_USER'],
+            'pass' => $_ENV['SMTP_PASS'],
+            'port' => $_ENV['SMTP_PORT'],
+            'from_email' => $_ENV['SMTP_FROM_EMAIL'],
+            'from_name' => $_ENV['SMTP_FROM_NAME']
+        ];
+    }
 
     public static function sendOrderConfirmation($toEmail, $username, $orderId, $total, $address, $items) {
         $mail = new PHPMailer(true);
+        $config = self::getSmtpConfig();
 
         try {
             // Server settings
             $mail->isSMTP();
-            $mail->Host       = self::SMTP_HOST;
+            $mail->Host       = $config['host'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = self::SMTP_USER;
-            $mail->Password   = self::SMTP_PASS;
-            $mail->SMTPSecure = self::SMTP_SECURE;
-            $mail->Port       = self::SMTP_PORT;
+            $mail->Username   = $config['user'];
+            $mail->Password   = $config['pass'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = $config['port'];
 
             // Fix for Certificate Mismatch on shared hosting
             $mail->SMTPOptions = array(
@@ -32,7 +38,7 @@ class MailService {
             );
 
             // Recipients
-            $mail->setFrom(self::SMTP_USER, 'DAW Store Orders');
+            $mail->setFrom($config['from_email'], $config['from_name']);
             $mail->addAddress($toEmail, $username);
 
             // Content
@@ -67,15 +73,17 @@ class MailService {
 
     public static function sendPasswordReset($toEmail, $username, $newPassword) {
         $mail = new PHPMailer(true);
+        $config = self::getSmtpConfig();
+
         try {
             // Server settings
             $mail->isSMTP();
-            $mail->Host       = self::SMTP_HOST;
+            $mail->Host       = $config['host'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = self::SMTP_USER;
-            $mail->Password   = self::SMTP_PASS;
-            $mail->SMTPSecure = self::SMTP_SECURE;
-            $mail->Port       = self::SMTP_PORT;
+            $mail->Username   = $config['user'];
+            $mail->Password   = $config['pass'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = $config['port'];
 
             // Fix for Certificate Mismatch
             $mail->SMTPOptions = array(
@@ -87,7 +95,7 @@ class MailService {
             );
 
             // Recipients
-            $mail->setFrom(self::SMTP_USER, 'DAW Store Support');
+            $mail->setFrom($config['from_email'], 'DAW Store Support');
             $mail->addAddress($toEmail, $username);
 
             // Content
