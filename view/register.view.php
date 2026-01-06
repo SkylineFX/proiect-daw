@@ -3,6 +3,7 @@
 <head>
     <title>Register</title>
     <link rel="stylesheet" href="../../assets/login.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="page-container">
@@ -29,6 +30,8 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required minlength="8" maxlength="128">
                 </div>
+                <div class="g-recaptcha" data-sitekey="<?php echo RECAPTCHA_SITE_KEY; ?>"></div>
+                <br>
                 <button type="submit" class="continue-button">Register</button>
             </form>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>

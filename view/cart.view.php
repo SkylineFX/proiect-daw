@@ -3,7 +3,7 @@ $pageTitle = 'Cos Cumparaturi';
 require_once APP_ROOT . '/view/partials/header.php';
 ?>
 
-    <div class="common-container" style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem;">
+    <div class="common-container max-w-[1200px] mx-auto my-12">
         <h1>Cosul de Cumparaturi</h1>
 
         <?php if (empty($cartItems)): ?>
@@ -11,7 +11,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                 Cosul tau este gol. <a href="../../index.php">Vezi produse</a>.
             </div>
         <?php else: ?>
-            <div style="background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); overflow: hidden;">
+            <div class="bg-white border-2 border-black rounded-sm overflow-hidden">
                 <table class="table" style="margin-top: 0; box-shadow: none;">
                     <thead>
                         <tr>

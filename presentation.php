@@ -147,6 +147,4 @@ require_once 'view/partials/header.php';
 
     </section>
 
-</body>
-
-</html>
+<?php require_once 'view/partials/footer.php'; ?>

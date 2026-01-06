@@ -9,9 +9,13 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf(); // Check CSRF token
 
-    $username = sanitize($_POST['username']);
-    $email = sanitize($_POST['email']);
-    $password = $_POST['password'];
+    // Verify reCAPTCHA
+    if (!verify_recaptcha($_POST['g-recaptcha-response'] ?? '')) {
+        $error = 'Please complete the reCAPTCHA verification.';
+    } else {
+        $username = sanitize($_POST['username']);
+        $email = sanitize($_POST['email']);
+        $password = $_POST['password'];
 
     // Validator already included via bootstrap
     $validationErrors = Validator::validateRegistration($username, $email, $password);
@@ -34,12 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['flash_success'] = 'Registration successful! You can now log in.';
                 // unset($_SESSION['csrf_token']); // Optional: Keep token valid for multiple requests or regenerate
 
-                redirect('app/controller/login.php');
+                redirect('/index.php');
             }
         } catch (PDOException $e) {
             error_log('Database error (register): ' . $e->getMessage());
             $error = 'An internal error occurred. Please try again later.';
         }
+    }
     }
 }
 

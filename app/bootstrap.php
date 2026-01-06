@@ -87,3 +87,42 @@ function require_admin() {
         die('Access Denied: Admins only.');
     }
 }
+
+// reCAPTCHA Configuration (TEST KEYS)
+// TODO: Replace with valid keys from https://www.google.com/recaptcha/admin for production
+define('RECAPTCHA_SITE_KEY', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI');
+define('RECAPTCHA_SECRET_KEY', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe');
+
+/**
+ * Verify reCAPTCHA
+ * Returns true if valid, false otherwise.
+ */
+function verify_recaptcha($token) {
+    if (empty($token)) {
+        return false;
+    }
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = [
+        'secret' => RECAPTCHA_SECRET_KEY,
+        'response' => $token
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        ]
+    ];
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    
+    if ($result === FALSE) {
+        return false;
+    }
+
+    $json = json_decode($result, true);
+    return isset($json['success']) && $json['success'] === true;
+}

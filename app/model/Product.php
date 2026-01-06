@@ -19,6 +19,95 @@ class Product {
         return $stmt->fetchAll();
     }
 
+    // Get paginated products
+    public function getProductsPaginated($limit = 12, $offset = 0) {
+        $sql = "SELECT p.*, c.name as category_name, s.name as subcategory_name 
+                FROM products p 
+                LEFT JOIN subcategories s ON p.subcategory_id = s.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                ORDER BY p.created_at DESC
+                LIMIT :limit OFFSET :offset";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        // PDO params for limit/offset need to be integers
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    // Get paginated products by category
+    public function getProductsByCategoryPaginated($categoryId, $limit = 12, $offset = 0) {
+        $sql = "SELECT p.*, c.name as category_name, s.name as subcategory_name 
+                FROM products p 
+                LEFT JOIN subcategories s ON p.subcategory_id = s.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE c.id = :category_id
+                ORDER BY p.created_at DESC
+                LIMIT :limit OFFSET :offset";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $stmt->bindValue(':category_id', $categoryId);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    // Get paginated products by subcategory
+    public function getProductsBySubcategoryPaginated($subcategoryId, $limit = 12, $offset = 0) {
+        $sql = "SELECT p.*, c.name as category_name, s.name as subcategory_name 
+                FROM products p 
+                LEFT JOIN subcategories s ON p.subcategory_id = s.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE s.id = :subcategory_id
+                ORDER BY p.created_at DESC
+                LIMIT :limit OFFSET :offset";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $stmt->bindValue(':subcategory_id', $subcategoryId);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    // Get total count of products
+    public function getTotalProductCount() {
+        $sql = "SELECT COUNT(*) as total FROM products";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['total'];
+    }
+
+    // Get total count of products by category
+    public function getTotalProductCountByCategory($categoryId) {
+        $sql = "SELECT COUNT(*) as total 
+                FROM products p 
+                LEFT JOIN subcategories s ON p.subcategory_id = s.id
+                WHERE s.category_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$categoryId]);
+        $row = $stmt->fetch();
+        return $row['total'];
+    }
+
+    // Get total count of products by subcategory
+    public function getTotalProductCountBySubcategory($subcategoryId) {
+        $sql = "SELECT COUNT(*) as total FROM products WHERE subcategory_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$subcategoryId]);
+        $row = $stmt->fetch();
+        return $row['total'];
+    }
+
     // Get single product
     public function getProductById($id) {
         $sql = "SELECT * FROM products WHERE id = ?";

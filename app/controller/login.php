@@ -9,8 +9,12 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf(); // Check CSRF token
     
-    $username = sanitize($_POST['username']);
-    $password = $_POST['password'];
+    // Verify reCAPTCHA
+    if (!verify_recaptcha($_POST['g-recaptcha-response'] ?? '')) {
+        $error = 'Please complete the reCAPTCHA verification.';
+    } else {
+        $username = sanitize($_POST['username']);
+        $password = $_POST['password'];
 
     if (empty($username) || empty($password)) {
         $error = 'Both username and password are required.';
@@ -65,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 // --- End Cart Sync ---
 
-                redirect('app/controller/dashboard.php');
+                redirect('/index.php');
             } else {
                 $error = 'Invalid username or password.';
             }
@@ -73,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log('Login DB Error: ' . $e->getMessage());
             $error = 'Internal error. Please try again later.';
         }
+    }
     }
 }
 
