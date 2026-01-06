@@ -3,9 +3,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 class MailService {
-    private const SMTP_HOST = 'rtudor.daw.ssmr.ro'; // Trying common subdomain for hosting
-    // NOTE: If connection fails, might need 'mail.rtudor.daw.ssmr.ro' or valid SMTP host for that domain.
-    // Given the request "sent from account@rtudor.daw.ssmr.ro", the host is likely 'rtudor.daw.ssmr.ro' or 'mail.rtudor.daw.ssmr.ro'.
+    private const SMTP_HOST = 'rtudor.daw.ssmr.ro';
     private const SMTP_USER = 'account@rtudor.daw.ssmr.ro';
     private const SMTP_PASS = 'account';
     private const SMTP_PORT = 465; // SMTPS usually

@@ -22,14 +22,13 @@ if ($subcategoryId) {
     $products = $productModel->getProductsBySubcategoryPaginated($subcategoryId, $limit, $offset);
     $totalProducts = $productModel->getTotalProductCountBySubcategory($subcategoryId);
     
-    // Find subcategory name for title (looping through categories to find it)
+    // Find subcategory name for title
     $subcategoryName = 'Produse';
-    // We also want to keep categoryId set if possible for the UI to maybe highlight parent category
     foreach ($categories as $cat) {
         foreach ($cat['subcategories'] as $sub) {
             if ($sub['id'] == $subcategoryId) {
                 $subcategoryName = $sub['name'];
-                $categoryId = $cat['id']; // Auto-set parent category
+                $categoryId = $cat['id'];
                 break 2;
             }
         }
@@ -60,7 +59,7 @@ $totalPages = ceil($totalProducts / $limit);
 require_once 'view/partials/header.php';
 ?>
 
-    <!-- Hero Component (Mega Menu) -->
+    <!-- Hero Component (Links Menu) -->
     <div class="max-w-[1200px] mx-auto my-8 bg-white p-1 rounded-md border-black border-2">
         <div class="hero-container" id="heroContainer">
             
@@ -101,7 +100,7 @@ require_once 'view/partials/header.php';
 
             <!-- The Overlay Panel -->
             <div id="mega-menu-overlay">
-                <!-- Content injected via JS -->
+                <!-- JS -->
             </div>
 
             <!-- Hero Carousel -->

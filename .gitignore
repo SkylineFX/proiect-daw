@@ -9,3 +9,4 @@ composer.lock
 update_schema.php
 vendor.zip
 export.sql
+assets/uploads/
