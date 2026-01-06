@@ -44,25 +44,7 @@ h3 { @apply text-xl; }
 p { @apply text-text-secondary mb-4; }
 
 /* Buttons */
-.btn, .btn-primary, .btn-danger, .btn-add {
-    @apply inline-block px-5 py-2.5 rounded-sm font-medium text-center cursor-pointer transition-all duration-200 border-none text-base no-underline;
-}
 
-.btn-primary, .btn-add {
-    @apply bg-accent-primary text-white;
-}
-
-.btn-primary:hover, .btn-add:hover {
-    @apply bg-accent-hover shadow-md -translate-y-px;
-}
-
-.btn-danger {
-    @apply bg-bg-card text-danger border border-border-color;
-}
-
-.btn-danger:hover {
-    @apply bg-red-50 border-danger;
-}
 .product-card:hover {
     @apply -translate-y-1 shadow-hover border-transparent;
 }

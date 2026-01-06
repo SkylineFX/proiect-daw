@@ -61,7 +61,7 @@ require_once 'view/partials/header.php';
 ?>
 
     <!-- Hero Component (Mega Menu) -->
-    <div class="max-w-[1200px] mx-auto mb-8 bg-white p-1 rounded-md border-black border-2">
+    <div class="max-w-[1200px] mx-auto my-8 bg-white p-1 rounded-md border-black border-2">
         <div class="hero-container" id="heroContainer">
             
             <!-- Category Navigation -->
@@ -72,7 +72,7 @@ require_once 'view/partials/header.php';
                 <ul class="list-none p-0 m-0" id="categoryList">
                     <?php foreach ($categories as $cat): ?>
                     <li class="category-li">
-                        <a href="index.php?category_id=<?= $cat['id'] ?>" class="block px-4 py-3 no-underline text-gray-800 bg-white border-b border-gray-200 transition-colors duration-200 relative cursor-pointer hover:bg-gray-100" data-has-subs="<?= !empty($cat['subcategories']) ? 'true' : 'false' ?>">
+                        <a href="index.php?category_id=<?= $cat['id'] ?>#products" class="block px-4 py-3 no-underline text-gray-800 bg-white border-b border-gray-200 transition-colors duration-200 relative cursor-pointer hover:bg-gray-100" data-has-subs="<?= !empty($cat['subcategories']) ? 'true' : 'false' ?>">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <span><?= htmlspecialchars($cat['name']) ?></span>
                                 <?php if (!empty($cat['subcategories'])): ?>
@@ -87,7 +87,7 @@ require_once 'view/partials/header.php';
                             <h3 style="margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;"><?= htmlspecialchars($cat['name']) ?></h3>
                             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
                                 <?php foreach ($cat['subcategories'] as $sub): ?>
-                                    <a href="index.php?category_id=<?= $cat['id'] ?>&subcategory_id=<?= $sub['id'] ?>" class="decoration-none text-text-secondary p-2 bg-gray-100 rounded-sm">
+                                    <a href="index.php?category_id=<?= $cat['id'] ?>&subcategory_id=<?= $sub['id'] ?>#products" class="decoration-none text-text-secondary p-2 bg-gray-100 rounded-sm">
                                         <?= htmlspecialchars($sub['name']) ?>
                                     </a>
                                 <?php endforeach; ?>
@@ -104,17 +104,22 @@ require_once 'view/partials/header.php';
                 <!-- Content injected via JS -->
             </div>
 
-            <!-- Hero Carousel (Placeholder) -->
-            <div class="hero-carousel">
-                <div style="text-align: center; color: #999;">
-                    <h2 style="margin-bottom: 1rem;">Bine ati venit!</h2>
-                    <p>Descopera cele mai bune oferte la rechizite scolare.</p>
-                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
-                         <!-- Placeholder images -->
-                         <div style="width: 150px; height: 100px; background: #ddd; display: flex; align-items: center; justify-content: center;">Slide 1</div>
-                         <div style="width: 150px; height: 100px; background: #ddd; display: flex; align-items: center; justify-content: center;">Slide 2</div>
-                         <div style="width: 150px; height: 100px; background: #ddd; display: flex; align-items: center; justify-content: center;">Slide 3</div>
-                    </div>
+            <!-- Hero Carousel -->
+            <div class="hero-carousel flex-grow relative overflow-hidden rounded-tr-md rounded-br-md">
+                <!-- Slides -->
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                    <img src="<?= URL_ROOT ?>/assets/hero-slide-1.jpg" alt="Hero Slide 1" class="w-full h-full object-cover">
+                </div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                    <img src="<?= URL_ROOT ?>/assets/hero-slide-2.jpg" alt="Hero Slide 2" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Overlay Text -->
+                <div class="absolute inset-0 bg-black/40 z-10 flex flex-col justify-center items-center text-white text-center p-8">
+                    <h1 class="text-xl mb-6 drop-shadow-sm max-w-md" style="color: white;">Descopera cele mai bune oferte la rechizite si accesorii.</h1>
+                    <a href="#products" class="px-8 py-3 bg-[#FFD43D] text-black font-bold text-lg rounded-sm hover:bg-[#F2C94C] transition-colors border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)]">
+                        Vezi Produse
+                    </a>
                 </div>
             </div>
         </div>
@@ -122,12 +127,28 @@ require_once 'view/partials/header.php';
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Carousel Logic
+            const slides = document.querySelectorAll('.carousel-slide');
+            let currentSlide = 0;
+            
+            if (slides.length > 0) {
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('opacity-100');
+                    slides[currentSlide].classList.add('opacity-0');
+                    
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    
+                    slides[currentSlide].classList.remove('opacity-0');
+                    slides[currentSlide].classList.add('opacity-100');
+                }, 5000); // 5 seconds
+            }
+
             const overlay = document.getElementById('mega-menu-overlay');
             const heroContainer = document.getElementById('heroContainer');
             const categoryItems = document.querySelectorAll('.category-li');
 
             categoryItems.forEach(item => {
-                const link = item.querySelector('.category-item');
+                const link = item.querySelector('a'); // Target the main link
                 const source = item.querySelector('.subcat-source');
 
                 item.addEventListener('mouseenter', () => {
@@ -142,16 +163,11 @@ require_once 'view/partials/header.php';
                 });
 
                 item.addEventListener('mouseleave', (e) => {
-                    // Slight delay or check if moving to overlay could be added, 
-                    // but for simplicity, we rely on the container mouseleave
-                    // actually, if we leave the item, we might be entering the overlay OR another item.
                     // If we enter the overlay, we should keep it open.
                      link.style.background = '';
                 });
             });
 
-            // Logic to hide overlay when leaving the entire area (sidebar + overlay)
-            // Or simpler: Hide when hovering a 'no-sub' item or leaving the container
             heroContainer.addEventListener('mouseleave', () => {
                 overlay.style.display = 'none';
             });
@@ -164,7 +180,7 @@ require_once 'view/partials/header.php';
     </script>
 
     <div class="max-w-[1200px] mx-auto">
-        <h1 class="text-2xl font-bold mt-12"><?= htmlspecialchars($categoryName) ?></h1>
+        <h1 id="products" class="text-2xl font-bold mt-12"><?= htmlspecialchars($categoryName) ?></h1>
         
         <?php if (empty($products)): ?>
             <p>Nu exista produse momentan in aceasta categorie.</p>
@@ -197,7 +213,7 @@ require_once 'view/partials/header.php';
                          </div>
                          <div class="flex flex-col gap-2">
                             <div class="product-price"><?= number_format($p['price'], 2) ?> RON</div>
-                            <a href="#" class="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200" data-id="<?= $p['id'] ?>">Adauga in Cos</a>
+                            <a href="#" class="btn-add h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200 block text-center flex items-center justify-center font-bold text-black no-underline" data-id="<?= $p['id'] ?>">Adauga in Cos</a>
                          </div>
                     </div>
                 </div>

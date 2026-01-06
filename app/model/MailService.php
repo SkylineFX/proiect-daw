@@ -34,7 +34,7 @@ class MailService {
             );
 
             // Recipients
-            $mail->setFrom(self::SMTP_USER, 'DAW Store Order');
+            $mail->setFrom(self::SMTP_USER, 'DAW Store Orders');
             $mail->addAddress($toEmail, $username);
 
             // Content

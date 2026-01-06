@@ -97,7 +97,7 @@ require_once APP_ROOT . '/view/partials/header.php';
         <div class="md:col-span-2">
             <div class="bg-white p-6 rounded border-2 border-black">
                 <h2 class="text-xl font-bold mb-4 border-b pb-2">
-                    <?php echo is_admin() ? 'Manage All Orders' : 'Istoricul Comenzilor'; ?>
+                    <?php echo is_admin() ? 'Administreaza comenzile' : 'Istoricul Comenzilor'; ?>
                 </h2>
 
                 <?php if (empty($orders)): ?>
@@ -145,7 +145,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                                             <form 
                                                 method="POST" 
                                                 onsubmit="return confirm('Confirmi actiunea?');" 
-                                                class="flex flex-col gap-1 items-start"
+                                                class="flex flex-col gap-1"
                                             >
                                                 <input 
                                                     type="hidden" 
@@ -159,9 +159,9 @@ require_once APP_ROOT . '/view/partials/header.php';
                                                         type="submit" 
                                                         name="action" 
                                                         value="cancel" 
-                                                        class="bg-red-300 text-black text-xs font-bold border-black border-2 p-1 rounded-sm"
+                                                        class="block text-center bg-red-300 hover:bg-red-400 text-black text-xs font-bold border-black border-1 p-1 rounded-sm transition-colors duration-200"
                                                     >
-                                                        Cancel
+                                                        Anuleaza
                                                     </button>
                                                 <?php endif; ?>
 
@@ -170,12 +170,20 @@ require_once APP_ROOT . '/view/partials/header.php';
                                                         type="submit" 
                                                         name="action" 
                                                         value="ship" 
-                                                        class="bg-green-300 text-black text-xs font-bold border-black border-2 p-1 rounded-sm"
+                                                        class="block text-center bg-green-300 hover:bg-green-400 text-black text-xs font-bold border-black border-1 p-1 rounded-sm transition-colors duration-200"
                                                     >
-                                                        Mark Shipped
+                                                        Marcheaza Livrat
                                                     </button>
                                                 <?php endif; ?>
                                             </form>
+                                            
+                                            <!-- Invoice Download -->
+                                            <a 
+                                                href="invoice.php?order_id=<?php echo $order['id']; ?>" 
+                                                class="block text-center mt-1 bg-blue-100 text-blue-800 text-xs font-bold border-blue-300 border p-1 rounded-sm hover:bg-blue-200 transition-colors duration-200"
+                                            >
+                                                Descarca Factura
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

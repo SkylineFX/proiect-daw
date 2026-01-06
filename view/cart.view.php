@@ -11,7 +11,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                 Cosul tau este gol. <a href="../../index.php">Vezi produse</a>.
             </div>
         <?php else: ?>
-            <div class="bg-white border-2 border-black rounded-sm overflow-hidden">
+            <div class="bg-white overflow-hidden">
                 <table class="table" style="margin-top: 0; box-shadow: none;">
                     <thead>
                         <tr>
@@ -33,12 +33,9 @@ require_once APP_ROOT . '/view/partials/header.php';
                                     <b><?= htmlspecialchars($item['name']) ?></b>
                                 </div>
                             </td>
-                            <td><?= number_format($item['price'], 2) ?> RON</td>
-                            <td>
-                                <!-- Simple quantity display for now, could be input -->
-                                <?= $item['qty'] ?>
-                            </td>
-                            <td><?= number_format($item['line_total'], 2) ?> RON</td>
+                            <td class="text-center"><?= number_format($item['price'], 2) ?> RON</td>
+                            <td class="text-center"><?= $item['qty'] ?></td>
+                            <td class="text-center"><?= number_format($item['line_total'], 2) ?> RON</td>
                             <td>
                                 <button onclick="removeFromCart(<?= $item['id'] ?>)" class="bg-[#FF0C81] text-white text-xs font-bold border-black border-2 p-2 rounded-sm w-full">Sterge</button>
                             </td>
@@ -46,7 +43,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                         <?php endforeach; ?>
                         
                         <tr style="font-weight: bold; background: #f8fafc;">
-                            <td colspan="3" style="text-align: right;">Total General:</td>
+                            <td colspan="3" class="text-right">Total General:</td>
                             <td colspan="2"><?= number_format($totalPrice, 2) ?> RON</td>
                         </tr>
                     </tbody>

@@ -5,12 +5,12 @@ require_once APP_ROOT . '/view/partials/header.php';
 
     <div class="max-w-[1200px] mx-auto px-6 my-12">
         <div class="flex justify-between items-center">
-            <h1>Product Management</h1>
+            <h1>Administrare Produse</h1>
             <a 
                 href="products.php?action=create" 
                 class="h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200"
             >
-                Add New Product
+                Adauga Produs Nou
             </a>
         </div>
 
@@ -24,12 +24,12 @@ require_once APP_ROOT . '/view/partials/header.php';
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Actions</th>
+                    <th>Imagine</th>
+                    <th>Nume</th>
+                    <th>Categorie</th>
+                    <th>Pret</th>
+                    <th>Stoc</th>
+                    <th>Actiuni</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,20 +46,20 @@ require_once APP_ROOT . '/view/partials/header.php';
                     <td>$<?= number_format($p['price'], 2) ?></td>
                     <td><?= $p['stock'] ?></td>
                     <td>
-                        <div class="flex flex-col items-start justify-center gap-1">
+                        <div class="flex flex-col justify-center gap-1">
                             <a 
                                 href="products.php?action=edit&id=<?= $p['id'] ?>" 
-                                class="bg-[#FFD43D] text-black text-xs font-bold border-black border-2 p-1 rounded-sm"
+                                class="block text-center bg-[#FFD43D] text-black text-xs font-bold border-black border-1 p-1 rounded-sm"
                             >
                                 Edit
                             </a>
-                            <form action="products.php?action=delete&id=<?= $p['id'] ?>" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure?')">
+                            <form action="products.php?action=delete&id=<?= $p['id'] ?>" method="POST" style="display:inline;" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest produs?')">
                                 <?php csrf_field(); ?>
                                 <button 
                                     type="submit" 
-                                    class="bg-[#FF0C81] text-white text-xs font-bold border-black border-2 p-1 rounded-sm"
+                                    class="block text-center bg-[#FF0C81] text-white text-xs font-bold border-black border-1 p-1 rounded-sm"
                                 >
-                                    Delete
+                                    Sterge
                                 </button>
                             </form>
                         </div>

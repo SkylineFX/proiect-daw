@@ -95,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Create Order
-        $stmtEntry = $pdo->prepare("INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, 'pending')");
-        $stmtEntry->execute([$user['id'], $cartTotal]);
+        $stmtEntry = $pdo->prepare("INSERT INTO orders (user_id, total_amount, status, delivery_address) VALUES (?, ?, 'pending', ?)");
+        $stmtEntry->execute([$user['id'], $cartTotal, $finalAddressString]);
         $orderId = $pdo->lastInsertId();
 
         // Create Order Items and Update Stock

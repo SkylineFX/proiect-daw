@@ -9,7 +9,7 @@ require_once APP_ROOT . '/view/partials/header.php';
             <a href="../../index.php" style="color: #718096; text-decoration: none;">&larr; Inapoi la produse</a>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; background: white; padding: 3rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; background: white; padding: 3rem;" class="rounded-md border-2 border-black">
             
             <!-- Product Image -->
             <div style="display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 2rem;">
@@ -33,8 +33,8 @@ require_once APP_ROOT . '/view/partials/header.php';
                     <?= nl2br(htmlspecialchars($product['description'])) ?>
                 </div>
 
-                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <div style="margin-bottom: 1rem;">
+                <div class="bg-[#f8fafc] p-6 rounded-md">
+                    <div style="margin-bottom: 1rem;" >
                         <strong>Stoc:</strong> 
                         <?php if($product['stock'] > 10): ?>
                             <span style="color: #10b981;">In Stoc (<?= $product['stock'] ?> buc)</span>
@@ -46,7 +46,7 @@ require_once APP_ROOT . '/view/partials/header.php';
                     </div>
 
                     <?php if($product['stock'] > 0): ?>
-                        <button class="btn-add" data-id="<?= $product['id'] ?>" style="width: 100%; padding: 1rem; font-size: 1.1rem; justify-content: center; display: flex;">
+                        <button class="btn-add w-full h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] rounded-sm transition-all duration-200" data-id="<?= $product['id'] ?>">
                             Adauga in Cos
                         </button>
                     <?php else: ?>

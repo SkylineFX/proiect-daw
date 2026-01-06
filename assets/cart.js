@@ -1,7 +1,3 @@
-/**
- * Simple Cart Management via AJAX
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     updateCartUI(); // Fetch initial count
 
@@ -34,7 +30,6 @@ async function addToCart(productId, quantity = 1) {
 
         const data = await response.json();
         if (data.success) {
-            // Optional: Show a toast or visual feedback
             alert('Produs adaugat in cos!');
             updateCartCount(data.count);
         } else {
